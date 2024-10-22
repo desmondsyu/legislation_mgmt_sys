@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  php-apache:
+    build: .
+    container_name: legislation_sys_php
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./.env:/var/www/html/.env
+    networks:
+      - my_network
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_HOST=${MYSQL_HOST}
+    depends_on:
+      - mysql-db
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: legislation_sys_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: legislation_sys_db
+      MYSQL_USER: govuser
+      MYSQL_PASSWORD: Gov@user1234
+    networks:
+      - my_network 
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./src/public/init.sql:/docker-entrypoint-initdb.d/init.sql 
+
+    ports:
+      - "3310:3306"
+
+volumes:
+  db_data:
+
+networks:
+  my_network:
