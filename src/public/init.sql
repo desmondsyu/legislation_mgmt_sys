@@ -2,7 +2,7 @@ CREATE TABLE user (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(50) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  role ENUM('PARLIAMENT', 'REVIEWER', 'ADMINISTRATOR')
+  role ENUM('PARLIAMENT', 'REVIEWER', 'ADMINISTRATOR') NOT NULL
 );
 
 CREATE TABLE bill (
@@ -12,8 +12,8 @@ CREATE TABLE bill (
   author INT NOT NULL,
   content VARCHAR(255) NOT NULL,
   status CHAR(1) NOT NULL DEFAULT 'D',
-  create_time TIMESTAMP DEFAULT,
-  FOREIGN KEY (author) REFERENCES users(id) ON DELETE CASCADE
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE
 );
 
 CREATE TABLE bill_status (
@@ -22,27 +22,27 @@ CREATE TABLE bill_status (
   status_desc VARCHAR(10) NOT NULL
 );
 
-INSERT INTO bill_status VALUES
-(1, 'D', 'Draft')
-(2, 'R', 'Review')
-(3, 'A', 'Approved')
-(4, 'N', 'Rejected')
-(5, 'V', 'Voting')
+INSERT INTO bill_status (id, status_code, status_desc) VALUES
+(1, 'D', 'Draft'),
+(2, 'R', 'Review'),
+(3, 'A', 'Approved'),
+(4, 'N', 'Rejected'),
+(5, 'V', 'Voting'),
 (6, 'P', 'Passed');
 
 CREATE TABLE amendments (
   id INT AUTO_INCREMENT PRIMARY KEY,
   bill_id INT NOT NULL,
-  amendments VARCHAR(255)
-  create_time TIMESTAMP DEFAULT,
+  amendments VARCHAR(255),
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (bill_id) REFERENCES bill(id)
 );
 
 CREATE TABLE vote (
   id INT AUTO_INCREMENT PRIMARY KEY,
   bill_id INT NOT NULL,
-  vote_agree INT,
-  vote_disagree INT,
+  vote_agree INT DEFAULT 0,
+  vote_disagree INT DEFAULT 0,
   FOREIGN KEY (bill_id) REFERENCES bill(id)
 );
 

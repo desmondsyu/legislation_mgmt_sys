@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "Failed to register user.";
             }
         } catch (Exception $e) {
-            $errorMessage .= "<p>" . $e->getMessage() . "</p>";
+            $errorMessage .= "<p>" . $e->getMessage() . $e->getTraceAsString() . "</p>";
         }
     }
 }

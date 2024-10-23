@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   php-apache:
     build: .
@@ -31,7 +30,6 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./src/public/init.sql:/docker-entrypoint-initdb.d/init.sql 
-
     ports:
       - "3310:3306"
 
