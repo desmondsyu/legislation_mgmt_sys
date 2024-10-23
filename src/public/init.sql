@@ -30,7 +30,7 @@ INSERT INTO bill_status (id, status_code, status_desc) VALUES
 (5, 'V', 'Voting'),
 (6, 'P', 'Passed');
 
-CREATE TABLE amendments (
+CREATE TABLE amendment (
   id INT AUTO_INCREMENT PRIMARY KEY,
   bill_id INT NOT NULL,
   amendments VARCHAR(255),
@@ -43,6 +43,7 @@ CREATE TABLE vote (
   bill_id INT NOT NULL,
   vote_agree INT DEFAULT 0,
   vote_disagree INT DEFAULT 0,
+  result INT GENERATED ALWAYS AS (vote_agree - vote_disagree) VIRTUAL,
   FOREIGN KEY (bill_id) REFERENCES bill(id)
 );
 

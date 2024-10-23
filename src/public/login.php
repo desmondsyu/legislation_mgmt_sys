@@ -18,7 +18,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if ($user) {
                 $_SESSION['user'] = $user;
-                header('Location: dashboard.php');
+                $_SESSION['role'] = $user['role'];
+
+                switch ($_SESSION['role']) {
+                    case 'PARLIAMENT':
+                        header('Location: dashboard_mp.php');
+                        break;
+                    case 'REVIEWER':
+                        header('Location: dashboard_reviewer.php');
+                        break;
+                    case 'ADMINISTRATOR':
+                        header('Location: dashboard_admin.php');
+                        break;
+                    default:
+                        break;
+                }
             } else {
                 echo "Invalid credentials!";
             }
