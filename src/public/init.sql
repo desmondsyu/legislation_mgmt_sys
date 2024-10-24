@@ -13,22 +13,23 @@ CREATE TABLE bill (
   content VARCHAR(255) NOT NULL,
   status CHAR(1) NOT NULL DEFAULT 'D',
   create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE
+  FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE,
+  FOREIGN KEY (status) REFERENCES bill_status(status_code)
 );
 
 CREATE TABLE bill_status (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  status_code CHAR(1) NOT NULL,
+  status_code CHAR(1) PRIMARY KEY,
   status_desc VARCHAR(10) NOT NULL
 );
 
-INSERT INTO bill_status (id, status_code, status_desc) VALUES
-(1, 'D', 'Draft'),
-(2, 'R', 'Review'),
-(3, 'A', 'Approved'),
-(4, 'N', 'Rejected'),
-(5, 'V', 'Voting'),
-(6, 'P', 'Passed');
+INSERT INTO bill_status (status_code, status_desc) VALUES
+('D', 'Draft'),
+('R', 'Review'),
+('A', 'Approved'),
+('N', 'Rejected'),
+('V', 'Voting'),
+('P', 'Passed'),
+('E', 'Denied');
 
 CREATE TABLE amendment (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -41,10 +42,10 @@ CREATE TABLE amendment (
 CREATE TABLE vote (
   id INT AUTO_INCREMENT PRIMARY KEY,
   bill_id INT NOT NULL,
-  vote_agree INT DEFAULT 0,
-  vote_disagree INT DEFAULT 0,
-  result INT GENERATED ALWAYS AS (vote_agree - vote_disagree) VIRTUAL,
-  FOREIGN KEY (bill_id) REFERENCES bill(id)
+  agree TINYINT(1) CHECK (agree IN (0, 1)),
+  mp_id INT,
+  FOREIGN KEY (bill_id) REFERENCES bill(id),
+  FOREIGN KEY (mp_id) REFERENCES user(id)
 );
 
 CREATE USER IF NOT EXISTS 'govuser'@'%' IDENTIFIED BY 'Gov@user1234';

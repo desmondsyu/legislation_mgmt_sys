@@ -22,7 +22,7 @@ class BillRepository extends BaseRepository
 
     public function update($id, $data)
     {
-        $sql = "UPDATE bill SET title = :title, description = :description, content = :content, status = :status where id = :id";
+        $sql = "UPDATE bill SET title = :title, description = :description, content = :content where id = :id";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
             'title' => $data['title'],

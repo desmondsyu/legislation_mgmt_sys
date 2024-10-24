@@ -9,10 +9,12 @@ class VoteRepository extends BaseRepository
 
     public function create($data)
     {
-        $sql = "INSERT INTO vote (bill_id) VALUES (:bill_id)";
+        $sql = "INSERT INTO vote (bill_id, agree, mp_id) VALUES (:bill_id, agree, mp_id)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
-            'bill_id' => $data['bill_id']
+            'bill_id' => $data['bill_id'],
+            'agree' => $data['agree'],
+            'mp_id' => $data['mp_id']
         ]);
         return $this->pdo->lastInsertId();
     }

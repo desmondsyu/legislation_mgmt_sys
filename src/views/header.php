@@ -7,6 +7,6 @@
 <body>
     <header>
         <nav>
-            
+            <button>Log Out</button>
         </nav>
     </header>
