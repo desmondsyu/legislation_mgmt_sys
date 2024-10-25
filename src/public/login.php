@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../config/database.php';
 require_once '../controllers/UserController.php';
 
@@ -17,7 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $user = $userController->login($username, $password);
 
             if ($user) {
-                $_SESSION['user'] = $user;
+                $lifetime = 60 * 60 * 24 * 7;
+                session_set_cookie_params($lifetime, '/');
+                session_start();
+                setcookie("user", $user['username'], time() + $lifetime, "/");
+                setcookie("role", $user['role'], time() + $lifetime, "/");
+                $_SESSION['user'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
 
                 switch ($_SESSION['role']) {
