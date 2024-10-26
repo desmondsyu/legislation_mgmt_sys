@@ -12,6 +12,7 @@ require_once '../controllers/AmendmentController.php';
 $errorMessage = "";
 $billController = new BillController($pdo);
 $amendmentController = new AmendmentController($pdo);
+$readonly = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET['bill']) && $_GET['bill'] == 'new') {

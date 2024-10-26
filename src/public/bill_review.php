@@ -7,6 +7,7 @@ $billController = new BillController($pdo);
 $amendmentController = new AmendmentController($pdo);
 $errorMessage = "";
 $billId = -1;
+$readonly = true;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($_POST["action"])) {
