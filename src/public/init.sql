@@ -22,8 +22,6 @@ CREATE TABLE bill (
   FOREIGN KEY (status) REFERENCES bill_status(status_code)
 );
 
-
-
 INSERT INTO bill_status (status_code, status_desc) VALUES
 ('D', 'Draft'),
 ('R', 'Review'),
