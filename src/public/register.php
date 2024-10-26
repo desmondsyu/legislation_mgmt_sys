@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($userId) {
                 echo "User registered successfully!";
-                header('Location: login.php');
             } else {
                 echo "Failed to register user.";
             }
