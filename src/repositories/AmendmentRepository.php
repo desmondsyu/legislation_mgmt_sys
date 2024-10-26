@@ -24,6 +24,6 @@ class AmendmentRepository extends BaseRepository
         $sql = "SELECT * FROM amendment WHERE bill_id = :bill_id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['bill_id' => $bill_id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

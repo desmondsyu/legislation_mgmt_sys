@@ -8,8 +8,10 @@ if (!isset($_SESSION['user'])) {
 
 require_once '../config/database.php';
 require_once '../controllers/BillController.php';
+require_once '../controllers/AmendmentController.php';
 $errorMessage = "";
 $billController = new BillController($pdo);
+$amendmentController = new AmendmentController($pdo);
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET['bill']) && $_GET['bill'] == 'new') {
@@ -63,5 +65,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <?php include '../views/bill_form.php' ?>
                 <button type="submit">Save</button>
             </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Amendment</th>
+                    <th>Time posted</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            $amendmentsForBill = $amendmentController->findByBill($billId);
+            foreach ($amendmentsForBill as $amendment) {
+                echo "<tr>
+                        <td>{$amendment['amendments']}</td>
+                        <td>{$amendment['create_time']}</td>
+                      </tr>";
+            }
+            ?>
+            </tbody>
+        </table>
     </div>
 <?php include '../views/footer.php' ?>
