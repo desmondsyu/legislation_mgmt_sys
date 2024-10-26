@@ -7,6 +7,8 @@
 <body>
     <header>
         <nav>
-            <button>Log Out</button>
+            <form action="../middleware/logout.php" method="POST">
+                <button type="submit">Logout</button>
+            </form>
         </nav>
     </header>
