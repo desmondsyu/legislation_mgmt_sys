@@ -6,17 +6,34 @@ $billController = new BillController($pdo);
 $errorMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (empty($_POST["bill"])) {
-        $errorMessage .= "<p>Please select bill!</p>";
-    } else {
+    if (isset($_POST["bill"]) && isset($_POST["action"])) {
         $billId = $_POST['bill'];
-
+        $action = $_POST['action'];
+        try {
+            switch ($action) {
+                case "pass":
+                    $billController->votePassed($billId);
+                    break;
+                case "deny":
+                    $billController->voteDenied($billId);
+                    break;
+                default:
+                    break;
+            }
+            header("location: dashboard_reviewer.php");
+        } catch (Exception $e) {
+            $errorMessage .= "<p>" . $e->getMessage() . "</p>";
+        }
+    } elseif (isset($_POST["bill"])) {
+        $billId = $_POST['bill'];
         try {
             $billController->submitBill($billId);
             header("location: dashboard_mp.php");
         } catch (Exception $e) {
             $errorMessage .= "<p>" . $e->getMessage() . "</p>";
         }
+    } else {
+        $errorMessage .= "<p>Please select bill!</p>";
     }
 }
 ?>
@@ -45,19 +62,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $myBills = $billController->findByAuthor((int)$_SESSION['user']);
                 foreach ($myBills as $bill) {
                     echo "<tr>
-                                    <td>{$bill['title']}</td>
-                                    <td>{$bill['description']}</td>
-                                    <td>{$bill['status']}</td>
-                                    <td>
-                                        <a href='bill_details.php?bill={$bill['id']}'>
-                                            <button type='button'>Edit</button>
-                                        </a>
-                                        <form method='post'>
-                                            <input type='hidden' name='bill' value='{$bill['id']}'>
-                                            <input type='submit' name='submit' value='Submit'>
-                                        </form>     
-                                    </td>
-                                  </tr>";
+                            <td>{$bill['title']}</td>
+                            <td>{$bill['description']}</td>
+                            <td>{$bill['status']}</td>
+                            <td>
+                                <a href='bill_details.php?bill={$bill['id']}'>
+                                    <button type='button'>Edit</button>
+                                </a>
+                                <form method='post'>
+                                    <input type='hidden' name='bill' value='{$bill['id']}'>
+                                    <input type='submit' name='submit' value='Submit'>
+                                </form>     
+                            </td>
+                          </tr>";
                 }
                 ?>
             </tbody>
@@ -84,9 +101,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <td>{$bill['title']}</td>
                                 <td>{$bill['description']}</td>
                                 <td>
-                                    <a href='bill_details.php?bill={$bill['id']}'>
-                                        <button type='button'>Edit</button>
-                                    </a>
+                                    <form method='post'>
+                                        <input type='hidden' name='bill' value='{$bill['id']}'>
+                                        <input type='hidden' name='action' value='pass'>
+                                        <input type='submit' name='submit' value='Pass'>
+                                    </form>
+                                    <form method='post'>
+                                        <input type='hidden' name='bill' value='{$bill['id']}'>
+                                        <input type='hidden' name='action' value='deny'>
+                                        <input type='submit' name='submit' value='Deny'>
+                                    </form>      
                                 </td>
                               </tr>";
                 }
