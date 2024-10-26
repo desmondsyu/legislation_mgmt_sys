@@ -1,5 +1,7 @@
 <?php
 
+require_once 'BaseRepository.php';
+
 class BillRepository extends BaseRepository
 {
     public function __construct($pdo)
@@ -47,7 +49,7 @@ class BillRepository extends BaseRepository
         $sql = "SELECT * FROM bill WHERE author = :author";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['author' => $author]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function findByStatus($status)
@@ -55,6 +57,6 @@ class BillRepository extends BaseRepository
         $sql = "SELECT * FROM bill WHERE status = :status";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['status' => $status]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

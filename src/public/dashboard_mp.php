@@ -1,5 +1,24 @@
 <?php
+session_start();
+require_once '../config/database.php';
+require_once '../controllers/BillController.php';
+$billController = new BillController($pdo);
+$errorMessage = "";
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (empty($_POST["bill"])) {
+        $errorMessage .= "<p>Please select bill!</p>";
+    } else {
+        $billId = $_POST['bill'];
+
+        try {
+            $billController->submitBill($billId);
+            header("location: dashboard_mp.php");
+        } catch (Exception $e) {
+            $errorMessage .= "<p>" . $e->getMessage() . "</p>";
+        }
+    }
+}
 ?>
 
 <?php include '../views/header.php' ?>
@@ -7,9 +26,10 @@
     <div>
         <div>
             <h1>My Bills</h1>
-            <a href="">
+            <a href="bill_details.php?bill=new">
                 <button type="button">Create</button>
             </a>
+            <?php echo $errorMessage; ?>
         </div>
         <table>
             <thead>
@@ -21,7 +41,25 @@
                 </tr>
             </thead>
             <tbody>
-
+                <?php
+                $myBills = $billController->findByAuthor((int)$_SESSION['user']);
+                foreach ($myBills as $bill) {
+                    echo "<tr>
+                                    <td>{$bill['title']}</td>
+                                    <td>{$bill['description']}</td>
+                                    <td>{$bill['status']}</td>
+                                    <td>
+                                        <a href='bill_details.php?bill={$bill['id']}'>
+                                            <button type='button'>Edit</button>
+                                        </a>
+                                        <form method='post'>
+                                            <input type='hidden' name='bill' value='{$bill['id']}'>
+                                            <input type='submit' name='submit' value='Submit'>
+                                        </form>     
+                                    </td>
+                                  </tr>";
+                }
+                ?>
             </tbody>
         </table>
     </div>
@@ -39,7 +77,20 @@
                 </tr>
             </thead>
             <tbody>
-
+                <?php
+                $votingBills = $billController->findByStatus('V');
+                foreach ($votingBills as $bill) {
+                    echo "<tr>
+                                <td>{$bill['title']}</td>
+                                <td>{$bill['description']}</td>
+                                <td>
+                                    <a href='bill_details.php?bill={$bill['id']}'>
+                                        <button type='button'>Edit</button>
+                                    </a>
+                                </td>
+                              </tr>";
+                }
+                ?>
             </tbody>
         </table>
     </div>

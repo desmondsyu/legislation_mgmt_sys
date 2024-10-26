@@ -75,4 +75,8 @@ class BillController
     public function findByStatus($status){
         return $this->billRepository->findByStatus($status);
     }
+
+    public function findById($id){
+        return $this->billRepository->findById($id);
+    }
 }

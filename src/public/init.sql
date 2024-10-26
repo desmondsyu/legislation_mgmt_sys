@@ -5,6 +5,11 @@ CREATE TABLE user (
   role ENUM('PARLIAMENT', 'REVIEWER', 'ADMINISTRATOR') NOT NULL
 );
 
+CREATE TABLE bill_status (
+    status_code CHAR(1) PRIMARY KEY,
+    status_desc VARCHAR(10) NOT NULL
+);
+
 CREATE TABLE bill (
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(100) NOT NULL,
@@ -17,10 +22,7 @@ CREATE TABLE bill (
   FOREIGN KEY (status) REFERENCES bill_status(status_code)
 );
 
-CREATE TABLE bill_status (
-  status_code CHAR(1) PRIMARY KEY,
-  status_desc VARCHAR(10) NOT NULL
-);
+
 
 INSERT INTO bill_status (status_code, status_desc) VALUES
 ('D', 'Draft'),

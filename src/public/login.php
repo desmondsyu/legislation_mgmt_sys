@@ -19,9 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $lifetime = 60 * 60 * 24 * 7;
                 session_set_cookie_params($lifetime, '/');
                 session_start();
-                setcookie("user", $user['username'], time() + $lifetime, "/");
+                setcookie("user", $user['id'], time() + $lifetime, "/");
                 setcookie("role", $user['role'], time() + $lifetime, "/");
-                $_SESSION['user'] = $user['username'];
+                $_SESSION['user'] = $user['id'];
                 $_SESSION['role'] = $user['role'];
 
                 switch ($_SESSION['role']) {
