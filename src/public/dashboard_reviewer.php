@@ -54,16 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <td>{$bill['description']}</td>
                                         <td>{$bill['status']}</td>
                                         <td>
-                                            <form method='post'>
+                                            <form action='bill_review.php'>
                                                 <input type='hidden' name='bill' value='{$bill['id']}'>
-                                                <input type='hidden' name='action' value='reject'>
-                                                <input type='submit' name='submit' value='Reject'>
-                                            </form> 
-                                            <form method='post'>
-                                                <input type='hidden' name='bill' value='{$bill['id']}'>
-                                                <input type='hidden' name='action' value='approve'>
-                                                <input type='submit' name='submit' value='Approve'>
-                                            </form>     
+                                                <input type='submit' value='Review'>
+                                            </form>
                                         </td>
                                       </tr>";
                 }

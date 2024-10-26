@@ -1,6 +1,6 @@
 <?php
 
-class VoteRepository extends BaseRepository
+class AmendmentRepository extends BaseRepository
 {
     public function __construct($pdo)
     {
