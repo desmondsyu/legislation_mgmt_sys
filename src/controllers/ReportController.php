@@ -74,4 +74,8 @@ class ReportController
             $pdf->Cell(40, 10, 'No votes found.');
         }
     }
+
+    public function getReport($filter){
+        return $this->billRepository->fetchFilteredBills($filter); 
+    }
 }
