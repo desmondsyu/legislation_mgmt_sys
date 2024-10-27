@@ -1,8 +1,10 @@
 <?php
+session_start();
 require_once '../config/database.php';
 require_once '../controllers/UserController.php';
 
 $errorMessage = "";
+$rememberUser = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($_POST["username"]) || empty($_POST["password"])) {
@@ -11,16 +13,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             $username = $_POST['username'];
             $password = $_POST['password'];
+            $rememberUser = isset($_POST["remember"]);
 
             $userController = new UserController($pdo);
             $user = $userController->login($username, $password);
 
             if ($user) {
-                $lifetime = 60 * 60 * 24 * 7;
-                session_set_cookie_params($lifetime, '/');
-                session_start();
-                setcookie("user", $user['id'], time() + $lifetime, "/");
-                setcookie("role", $user['role'], time() + $lifetime, "/");
+                
+                if ($rememberUser) {
+                    $lifetime = 60 * 60 * 24 * 7;
+                    setcookie("username", $user['username'], time() + $lifetime, "/");
+                    setcookie("user", $user['id'], time() + $lifetime, "/");
+                    setcookie("role", $user['role'], time() + $lifetime, "/");
+                }
+
                 $_SESSION['user'] = $user['id'];
                 $_SESSION['role'] = $user['role'];
 
@@ -49,9 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <form method="POST">
     <label>Username</label>
-    <input type="text" name="username" required>
+    <input type="text" name="username" value="<?php echo isset($_COOKIE['username']) ? htmlspecialchars($_COOKIE['username']) : ''; ?>" required />
     <label>Password</label>
-    <input type="text" name="password" required>
+    <input type="password" name="password" required />
+    <label>Remember Me</label>
+    <input type="checkbox" name="remember" />
     <button type="submit">Login</button>
     <a href="register.php">
         <button type="button">Register</button>
