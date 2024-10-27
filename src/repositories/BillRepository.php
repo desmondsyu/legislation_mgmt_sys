@@ -59,4 +59,37 @@ class BillRepository extends BaseRepository
         $stmt->execute(['status' => $status]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function fetchFilteredBills($author = null, $status = null, $startDate = null, $endDate = null) {
+        $query = "SELECT b.title, b.description, u.username AS author, bs.status_desc AS status, b.create_time
+                  FROM bill b
+                  JOIN user u ON b.author = u.id
+                  JOIN bill_status bs ON b.status = bs.status_code
+                  WHERE 1=1";
+        $params = [];
+
+        if ($author) {
+            $query .= " AND u.username = :author";
+            $params[':author'] = $author;
+        }
+
+        if ($status) {
+            $query .= " AND bs.status_desc = :status";
+            $params[':status'] = $status;
+        }
+
+        if ($startDate) {
+            $query .= " AND b.create_time >= :startDate";
+            $params[':startDate'] = $startDate;
+        }
+
+        if ($endDate) {
+            $query .= " AND b.create_time <= :endDate";
+            $params[':endDate'] = $endDate;
+        }
+
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
