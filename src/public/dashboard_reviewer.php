@@ -66,4 +66,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </table>
     </div>
 </div>
+<?php include 'notification.php' ?>
 <?php include '../views/footer.php' ?>
