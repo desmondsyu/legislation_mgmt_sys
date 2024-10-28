@@ -75,13 +75,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <td><?= $bill['status']; ?></td>
                         <td>
                             <form method='post'>
-                                <input type='hidden' name='bill' value='{$bill['id']}'>
+                                <input type='hidden' name='bill' value='<?= $bill['id']; ?>'>
                                 <button type='submit' name='action' value='vote'>Vote!</button>
                             </form>     
                         </td>
-                      </tr>";
-            }
-            ?>
+                      </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
