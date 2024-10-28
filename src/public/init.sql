@@ -42,7 +42,7 @@ CREATE TABLE amendment (
 CREATE TABLE vote (
   id INT AUTO_INCREMENT PRIMARY KEY,
   bill_id INT NOT NULL,
-  agree BOOLEAN,
+  agree TINYINT(1) CHECK (agree IN (0, 1)),
   mp_id INT,
   FOREIGN KEY (bill_id) REFERENCES bill(id),
   FOREIGN KEY (mp_id) REFERENCES user(id)
