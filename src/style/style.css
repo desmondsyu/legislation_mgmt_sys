@@ -114,32 +114,6 @@ footer {
     flex: 1;
 }
 
-.notify-area {
-    position: absolute;
-    right: 0;
-    width: 15%;
-    background-color: #757272;
-    color: white;
-    padding: 1rem;
-    height: auto;
-    overflow: hidden;
-}
-
-.notify-area h1 {
-    margin-bottom: 0.5rem;
-    size: 
-}
-
-.notify-area ul {
-    list-style-type: none;
-    padding: 0.2rem;
-    
-}
-
-.notify-area li {
-    margin: 0.5rem 0;
-    border: white solid;
-}
 
 .table-area {
     width: 80%;
@@ -328,4 +302,26 @@ table tbody tr td form input {
 
 .report-area table td {
     color: #333;
+}
+
+/* notify area */
+
+.notify-area {
+    background-color: #757272;
+    color: white;
+}
+
+.notify-area h1 {
+    margin-bottom: 0.5rem;
+}
+
+.notify-area ul {
+    list-style-type: none;
+    padding: 0.2rem;
+    
+}
+
+.notify-area li {
+    margin: 0.5rem 0;
+    border: white solid;
 }

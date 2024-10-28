@@ -1,10 +1,10 @@
 <?php
 require_once '../controllers/NotificationController.php';
 $notificationController = new NotificationController($pdo);
-$notificationList = $notificationController->findByRole($_SESSION['role']);
+try{
+    $notificationList = $notificationController->findByRole($_SESSION['role']);
 ?>
-
-<div class="notify-area">
+    <div class="notify-area">
     <h1>Notification</h1>
     <ul>
         <?php foreach($notificationList as $notify) : ; ?>
@@ -12,3 +12,10 @@ $notificationList = $notificationController->findByRole($_SESSION['role']);
         <?php endforeach ?>
     </ul>
 </div>
+<?php
+} catch(Exception $e) {
+
+}
+?>
+
+
