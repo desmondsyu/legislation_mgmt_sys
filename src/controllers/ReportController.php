@@ -25,9 +25,11 @@ class ReportController
 
         $bill = $this->billRepository->findById($bill_id);
         $amendments = $this->amendmentRepository->findByBill($bill_id);
+        $votes = $this->voteRepository->findByBill($bill_id);
         $votesAgree = $this->voteRepository->findByBillAndVote($bill_id, true);
         $votesDisagree = $this->voteRepository->findByBillAndVote($bill_id, false);
-
+        $agreeCount = count($votesAgree);
+        $disagreeCount = count($votesDisagree);
 
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="bill.pdf"');
@@ -68,9 +70,9 @@ class ReportController
         $pdf->SetFont('Arial', '', 12);
 
         if (!empty($votes)) {
-            $pdf->Cell(0, 10, "{$votesAgree->ob_get_length} Seats Agreed | {$votesDisagree->ob_get_length} Seats Declined", 0, 1, 'C');
+            $pdf->Cell(0, 10, "{$agreeCount} Seats Agreed | {$disagreeCount} Seats Declined");
         } else {
-            $pdf->Cell(0, 40, 'No votes found.');
+            $pdf->Cell(0, 10, 'No votes found.');
         }
 
         $pdf->Output();
