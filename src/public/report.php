@@ -15,63 +15,66 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<div class="report-area">
+<div class="report-area table-area">
     <div>
         <h1>Report</h1>
     </div>
     <div class="form-area">
         <form action="" method="POST">
-            <label>Title</label>
-            <input type="text" name="title" id="title" />
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" placeholder="Enter bill title" />
+            </div>
 
-            <label>Description</label>
-            <input type="text" name="description" id="description" />
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" name="description" id="description" placeholder="Enter bill description" />
+            </div>
 
-            <label>Status</label>
-            <select name="status" id="status">
-                <option value="">Select Status</option>
-                <option value="D">Draft</option>
-                <option value="R">Review</option>
-                <option value="A">Approved</option>
-                <option value="N">Rejected</option>
-                <option value="V">Voting</option>
-                <option value="P">Passed</option>
-                <option value="E">Denied</option>
-            </select>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select name="status" id="status">
+                    <option value="">Select Status</option>
+                    <option value="D">Draft</option>
+                    <option value="R">Review</option>
+                    <option value="A">Approved</option>
+                    <option value="N">Rejected</option>
+                    <option value="V">Voting</option>
+                    <option value="P">Passed</option>
+                    <option value="E">Denied</option>
+                </select>
+            </div>
 
-            <button type="submit">Search</button>
-        </form>
+            <button type="submit" class="btn">Search</button>        </form>
     </div>
 
-    <div class="table-area">
-        <table>
-            <thead>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Author</th>
+                <th>Status</th>
+                <th>Create Time</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($filteredBills as $bill): ?>
                 <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Author</th>
-                    <th>Status</th>
-                    <th>Create Time</th>
-                    <th>Download</th>
+                    <td><?= htmlspecialchars($bill['title']); ?></td>
+                    <td><?= htmlspecialchars($bill['description']); ?></td>
+                    <td><?= htmlspecialchars($bill['author']); ?></td>
+                    <td><?= htmlspecialchars($bill['status']); ?></td>
+                    <td><?= htmlspecialchars($bill['create_time']); ?></td>
+                    <td>
+                        <form action="download.php" method="GET">
+                            <input type="hidden" name="bill_id" value="<?= htmlspecialchars($bill['id']); ?>">
+                            <button type="submit">Export</button>
+                        </form>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($filteredBills as $bill): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($bill['title']); ?></td>
-                        <td><?= htmlspecialchars($bill['description']); ?></td>
-                        <td><?= htmlspecialchars($bill['author']); ?></td>
-                        <td><?= htmlspecialchars($bill['status']); ?></td>
-                        <td><?= htmlspecialchars($bill['create_time']); ?></td>
-                        <td>
-                            <form action="download.php" method="GET">
-                                <input type="hidden" name="bill_id" value="<?= htmlspecialchars($bill['id']); ?>">
-                                <button type="submit">Export</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach ?>
-            </tbody>
-        </table>
-    </div>
+            <?php endforeach ?>
+        </tbody>
+    </table>
 </div>
