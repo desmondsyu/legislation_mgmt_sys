@@ -38,7 +38,6 @@ footer {
     margin-top: auto;
 }
 
-// login
 .login-form {
     display: flex;
     flex-direction: column;
@@ -61,6 +60,7 @@ footer {
 
 .login-form button {
     background-color: #eb9138;
+    width: auto;
     border: none;
     color: white;
     padding: 0.5rem;
@@ -69,7 +69,6 @@ footer {
     margin-top: 1rem;
 }
 
-// register
 .register-form {
     display: flex;
     flex-direction: column;
@@ -111,29 +110,147 @@ footer {
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 100%;
+    height: auto;
+    flex: 1;
 }
 
 .notify-area {
     position: absolute;
     right: 0;
-    width: 300px;
+    width: 15%;
     background-color: #757272;
     color: white;
     padding: 1rem;
     height: auto;
+    overflow: hidden;
 }
 
 .notify-area h1 {
     margin-bottom: 0.5rem;
+    size: 
 }
 
 .notify-area ul {
     list-style-type: none;
     padding: 0.2rem;
-    border: white solid;
+    
 }
 
 .notify-area li {
     margin: 0.5rem 0;
+    border: white solid;
+}
+
+.table-area {
+    width: 80%;
+    margin: 1rem auto 1rem 1rem;
+    background-color: #f9f9f9;
+    padding: 2rem;
+}
+
+.table-area button {
+    background-color: #eb9138;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+table th, table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #2e2d2c;
+    color: white;
+    font-weight: bold;
+}
+
+table td {
+    color: #333;
+}
+
+table tbody tr td form {
+    display: inline;
+}
+
+table tbody tr td form input {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 0.5rem 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.report-area {
+    width: 80%;
+    margin: 1rem auto 1rem 1rem;
+    background-color: #f9f9f9;
+    padding: 2rem;
+    display: block;
+}
+
+.form-area {
+    margin: 1rem auto 1rem 1rem;
+    padding: 0.5rem 2rem ;
+}
+
+.form-area form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+.form-area form button{
+    background-color: #eb9138;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.bill-area {
+    width: 80%;
+    margin: 1rem auto 1rem 1rem;
+    background-color: #f9f9f9;
+    padding: 2rem;
+    display: block;
+}
+
+.bill-area label {
+    display: block;
+    margin: 0.5rem 0 0.2rem;
+    font-weight: bold;
+}
+
+.bill-area input {
+    display: block;
+    padding: 0.5rem;
+    border: solid;
+    font-size: 1rem;
+}
+
+.bill-area button {
+    background-color: #eb9138;
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
 }

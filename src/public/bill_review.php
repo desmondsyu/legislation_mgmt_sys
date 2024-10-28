@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 ?>
 
 <?php include '../views/header.php' ?>
-<div>
+<div class="bill-area">
     <div>
         <h1>Bill review</h1>
     </div>
