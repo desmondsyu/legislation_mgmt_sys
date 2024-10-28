@@ -44,10 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <option value="REVIEWER">Reviewer</option>
         <option value="ADMINISTRATOR">Adminstrator</option>
     </select>
-    <button type="submit">Register</button>
-    <a href="login.php">
-        <button type="button">Login</button>
-    </a>
+    <div>
+        <button type="submit">Register</button>
+        <a href="login.php">
+            <button type="button">Login</button>
+        </a>
+    </div>
+
     <?php echo $errorMessage ?>
 </form>
 <?php include '../views/footer.php' ?>
