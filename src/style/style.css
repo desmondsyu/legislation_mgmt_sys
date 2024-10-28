@@ -108,25 +108,20 @@ footer {
 }
 
 .container {
-    padding: 2rem;
     display: flex;
     flex-direction: column;
+    position: relative;
+    height: 100%;
 }
-// tables
 
-
-// notification
 .notify-area {
-    position: fixed;
-    display: block;
-    top: 20px;
+    position: absolute;
+    right: 0;
     width: 300px;
-    background-color: #2e2d2c; 
+    background-color: #757272;
     color: white;
     padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
+    height: auto;
 }
 
 .notify-area h1 {
@@ -135,7 +130,8 @@ footer {
 
 .notify-area ul {
     list-style-type: none;
-    padding: 0;
+    padding: 0.2rem;
+    border: white solid;
 }
 
 .notify-area li {
