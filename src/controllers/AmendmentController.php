@@ -15,8 +15,7 @@ class AmendmentController
 
     public function createNewAmendment($billId, $amendments)
     {
-        $title = $this->findByBill($billId)['title'];
-        $this->notificationController->createNewNotification("New amendment on bill: " . $title, 'PARLIAMENT');
+        $this->notificationController->createNewNotification("New amendment on bill: " . $billId, 'PARLIAMENT');
         return $this->amendmentRepository->create([
             'bill_id' => $billId,
             'amendments' => $amendments
