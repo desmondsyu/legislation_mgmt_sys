@@ -32,7 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<form method="POST">
+<?php include '../views/header.php' ?>
+<form class="register-form" method="POST">
     <label>Username</label>
     <input type="text" name="username" required>
     <label>Password</label>
@@ -49,3 +50,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </a>
     <?php echo $errorMessage ?>
 </form>
+<?php include '../views/footer.php' ?>

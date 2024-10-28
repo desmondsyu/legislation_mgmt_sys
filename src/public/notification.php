@@ -4,11 +4,11 @@ $notificationController = new NotificationController($pdo);
 $notificationList = $notificationController->findByRole($_SESSION['role']);
 ?>
 
-<div>
+<div class="notify-area">
     <h1>Notification</h1>
     <ul>
         <?php foreach($notificationList as $noti) : ; ?>
-        <li><?= $noti['message']; ?></li>
+        <li><?= htmlspecialchars($noti['message']); ?></li>
         <?php endforeach ?>
     </ul>
 </div>

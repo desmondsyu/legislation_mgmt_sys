@@ -53,7 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<form method="POST">
+<?php include '../views/header.php' ?>
+<form class="login-form" method="POST">
     <label>Username</label>
     <input type="text" name="username" value="<?php echo isset($_COOKIE['username']) ? htmlspecialchars($_COOKIE['username']) : ''; ?>" required />
     <label>Password</label>
@@ -66,3 +67,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </a>
     <?php echo $errorMessage ?>
 </form>
+<?php include '../views/footer.php' ?>

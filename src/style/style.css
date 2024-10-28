@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #2e2d2c;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+header form button {
+    background-color: #eb9138;
+    border: none;
+    color: white;
+    padding: 0.5rem 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+footer {
+    width: 100%;
+    background-color: #2e2d2c;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+}
+
+// login
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.login-form label {
+    display: block;
+    margin: 0.5rem 0 0.2rem;
+    font-weight: bold;
+}
+
+.login-form input {
+    display: block;
+    padding: 0.5rem;
+    border: solid;
+    font-size: 1rem;
+}
+
+.login-form button {
+    background-color: #eb9138;
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+// register
+.register-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.register-form label {
+    display: block;
+    margin: 0.5rem 0 0.2rem;
+    font-weight: bold;
+}
+
+.register-form input {
+    display: block;
+    padding: 0.5rem;
+    border: solid;
+    font-size: 1rem;
+}
+
+.register-form select {
+    display: block;
+    padding: 0.5rem;
+    border: solid;
+    font-size: 1rem;
+}
+
+.register-form button {
+    background-color: #eb9138;
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+// tables
+
+
+// notification
+.notify-area {
+    position: fixed;
+    display: block;
+    top: 20px;
+    width: 300px;
+    background-color: #2e2d2c; 
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.notify-area h1 {
+    margin-bottom: 0.5rem;
+}
+
+.notify-area ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.notify-area li {
+    margin: 0.5rem 0;
+}

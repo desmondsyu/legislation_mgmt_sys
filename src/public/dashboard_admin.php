@@ -5,6 +5,8 @@ require_once '../controllers/BillController.php';
 $billController = new BillController($pdo);
 $errorMessage = "";
 
+$billsToVote = $billController->findByStatus('A');
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($_POST["bill"])) {
         $errorMessage .= "<p>Please select bill!</p>";
@@ -22,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <?php include '../views/header.php' ?>
-<div>
-    <div>
+<div class="container">
+    <div class="table-area">
         <div>
             <h1>Approved Bills</h1>
         </div>
@@ -37,26 +39,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </tr>
             </thead>
             <tbody>
-            <?php
-            $billsToVote = $billController->findByStatus('A');
-            foreach ($billsToVote as $bill) {
-                echo "<tr>
-                        <td>{$bill['title']}</td>
-                        <td>{$bill['description']}</td>
-                        <td>{$bill['status']}</td>
+                <?php foreach ($billsToVote as $bill): ?>
+                    <tr>
+                        <td><?= $bill['title']; ?></td>
+                        <td><?= $bill['description']; ?></td>
+                        <td><?= $bill['status']; ?></td>
                         <td>
                             <form method='post'>
-                                <input type='hidden' name='bill' value='{$bill['id']}'>
+                                <input type='hidden' name='bill' value='<?= $bill['id']; ?>'>
                                 <input type='submit' name='submit' value='Vote!'>
-                            </form>     
+                            </form>
                         </td>
-                      </tr>";
-            }
-            ?>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+    <?php include './report.php' ?>
 </div>
-<?php include 'notification.php' ?>
-<?php include 'report.php' ?>
+<?php include './notification.php' ?>
 <?php include '../views/footer.php' ?>

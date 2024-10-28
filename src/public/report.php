@@ -2,10 +2,11 @@
 require_once '../controllers/ReportController.php';
 
 $reportController = new ReportController($pdo);
-$filterResults = [];
+$filteredBills = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $filter = [
+        'author' => $_POST['author'] ?? null,
         'title' => $_POST['title'] ?? null,
         'status' => $_POST['status'] ?? null,
         'start_date' => $_POST['start_date'] ?? null,
@@ -15,7 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<div>
+<div class="report-area">
+    <div>
+        <h1>Report</h1>
+    </div>
     <form action="" method="POST">
         <label>Title</label>
         <input type="text" name="title" id="title" />
@@ -51,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($filteredBills as $bill): ?>
+            <?php foreach ($filteredBills as $bill):  ?>
                 <tr>
                     <td><?= htmlspecialchars($bill['title']); ?></td>
                     <td><?= htmlspecialchars($bill['description']); ?></td>

@@ -75,7 +75,14 @@ class ReportController
         }
     }
 
-    public function getReport($filter){
-        return $this->billRepository->fetchFilteredBills($filter); 
+    public function getReport($filter)
+    {
+        return $this->billRepository->fetchFilteredBills(
+            $filter['author'] ?? null,
+            $filter['title'] ?? null,
+            $filter['status'] ?? null,
+            $filter['start_date'] ?? null,
+            $filter['end_date'] ?? null
+        );
     }
 }
