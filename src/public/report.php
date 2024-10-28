@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'start_date' => $_POST['start_date'] ?? null,
         'end_date' => $_POST['end_date'] ?? null
     ];
-    $filteredBills = $reportController->getReport($filter);
+    // $filteredBills = $reportController->getReport($filter);
 }
 ?>
 
