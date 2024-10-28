@@ -9,7 +9,7 @@ class VoteRepository extends BaseRepository
 
     public function create($data)
     {
-        $sql = "INSERT INTO vote (bill_id, agree, mp_id) VALUES (:bill_id, agree, mp_id)";
+        $sql = "INSERT INTO vote (bill_id, agree, mp_id) VALUES (:bill_id, :agree, :mp_id)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             'bill_id' => $data['bill_id'],
@@ -25,6 +25,22 @@ class VoteRepository extends BaseRepository
         $sql = "SELECT * FROM vote WHERE bill_id = :bill_id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['bill_id' => $bill_id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function userHasVoted($billId, $userId)
+    {
+        $sql = "SELECT COUNT(*) FROM vote WHERE bill_id = :bill_id AND mp_id = :mp_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['bill_id' => $billId, 'mp_id' => $userId]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public function findByBillAndVote($billId, $agree)
+    {
+        $sql = "SELECT * FROM vote WHERE bill_id = :bill_id AND agree = :agree";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['bill_id' => $billId, 'agree' => $agree]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

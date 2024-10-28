@@ -2,8 +2,11 @@
 session_start();
 require_once '../config/database.php';
 require_once '../controllers/BillController.php';
+require_once '../controllers/VoteController.php';
 $billController = new BillController($pdo);
+$voteController = new VoteController($pdo);
 $errorMessage = "";
+$user = $_SESSION['user'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST["bill"]) && isset($_POST["action"])) {
@@ -12,15 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             switch ($action) {
                 case "pass":
-                    $billController->votePassed($billId);
+                    $voteController->voteFor($billId, $user);
                     break;
                 case "deny":
-                    $billController->voteDenied($billId);
+                    $voteController->voteAgainst($billId, $user);
                     break;
                 default:
                     break;
             }
-            header("location: dashboard_reviewer.php");
+            header("location: dashboard_mp.php");
         } catch (Exception $e) {
             $errorMessage .= "<p>" . $e->getMessage() . "</p>";
         }
@@ -100,8 +103,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     echo "<tr>
                                 <td>{$bill['title']}</td>
                                 <td>{$bill['description']}</td>
-                                <td>
-                                    <form method='post'>
+                                <td>";
+                    if (!$voteController->userHasVoted($bill['id'], $user)) {
+                    echo "          <form method='post'>
                                         <input type='hidden' name='bill' value='{$bill['id']}'>
                                         <input type='hidden' name='action' value='pass'>
                                         <input type='submit' name='submit' value='Pass'>
@@ -110,8 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <input type='hidden' name='bill' value='{$bill['id']}'>
                                         <input type='hidden' name='action' value='deny'>
                                         <input type='submit' name='submit' value='Deny'>
-                                    </form>      
-                                </td>
+                                    </form>";
+                    }
+                    echo "    </td>
                               </tr>";
                 }
                 ?>

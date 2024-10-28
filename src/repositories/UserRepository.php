@@ -39,4 +39,11 @@ class UserRepository extends BaseRepository
         }
         return false;
     }
+
+    public function findAllMp()
+    {
+        $sql = "SELECT * FROM user WHERE role = 'PARLIAMENT'";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

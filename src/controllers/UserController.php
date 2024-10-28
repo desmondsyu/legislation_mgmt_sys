@@ -28,4 +28,9 @@ class UserController
     {
         return $this->userRepository->findByUsername($username);
     }
+
+    public function totalMP()
+    {
+        return count($this->userRepository->findAllMp());
+    }
 }
