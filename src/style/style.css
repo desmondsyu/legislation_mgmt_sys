@@ -254,3 +254,78 @@ table tbody tr td form input {
     cursor: pointer;
     margin-top: 1rem;
 }
+
+/* Report Form style */
+
+.report-area {
+    width: 80%;
+    background-color: #f9f9f9;
+    padding: 2rem;
+    display: block;
+}
+
+.report-area .header {
+    margin-bottom: 1.5rem; 
+}
+
+.report-area .form-area {
+    margin-bottom: 1.5rem; 
+}
+
+.report-area .form-area form {
+    display: flex;
+    flex-direction: column; 
+    gap: 1rem; 
+    align-items: flex-start;
+}
+
+.report-area .form-area label {
+    font-weight: bold; 
+    margin-bottom: 0.5rem; 
+}
+
+.report-area .form-area input,
+.report-area .form-area select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.report-area .form-area button {
+    background-color: #eb9138;
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    width: auto; 
+}
+
+.report-area .table-area {
+    margin-top: 1rem; 
+}
+
+.report-area table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.report-area table th,
+.report-area table td {
+    padding: 0.75rem;
+    text-align: left; 
+    border-bottom: 1px solid #ddd; 
+}
+
+.report-area table th {
+    background-color: #edda95; 
+    color: black;
+    font-weight: bold;
+}
+
+.report-area table td {
+    color: #333;
+}

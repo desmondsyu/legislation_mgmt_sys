@@ -7,28 +7,64 @@ $errorMessage = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['role'])) {
         $errorMessage .= "<p>Please fill all fields!</p>";
-    } else {
-        try {
-            if (!preg_match("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/", $_POST["password"])) {
-                throw new Exception("<p>The password is too weak! Please enter a stronger password.</p>");
-            }
-
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $role = $_POST['role'];
-
-            $userController = new UserController($pdo);
-            $userId = $userController->register($username, $password, $role);
-
-            if ($userId) {
-                echo "User registered successfully!";
-            } else {
-                echo "Failed to register user.";
-            }
-        } catch (Exception $e) {
-            $errorMessage .= "<p>" . $e->getMessage() . $e->getTraceAsString() . "</p>";
-        }
+        return;
     }
+
+    try {
+        $password = $_POST['password'];
+        $passwordErrors = validatePassword($password);
+    
+        if (!empty($passwordErrors)) {
+            throw new Exception(implode("<br>", $passwordErrors));
+        }
+
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $role = $_POST['role'];
+
+        $userController = new UserController($pdo);
+        $userId = $userController->register($username, $password, $role);
+
+        if ($userId) {
+            echo "User registered successfully!";
+        } else {
+            echo "Failed to register user.";
+        }
+    } catch (Exception $e) {
+        $errorMessage .= "<p>" . $e->getMessage() . "</p>";
+    }
+
+}
+
+function validatePassword($password) {
+    $errors = [];
+
+    // Check for at least one uppercase letter
+    if (!preg_match("/[A-Z]/", $password)) {
+        $errors[] = "Your password must contain at least one uppercase letter.";
+    }
+
+    // Check for at least one lowercase letter
+    if (!preg_match("/[a-z]/", $password)) {
+        $errors[] = "Your password must contain at least one lowercase letter.";
+    }
+
+    // Check for at least one digit
+    if (!preg_match("/[0-9]/", $password)) {
+        $errors[] = "Your password must contain at least one number.";
+    }
+
+    // Check for at least one special character
+    if (!preg_match("/[#?!@$%^&*-]/", $password)) {
+        $errors[] = "Your password must contain at least one special character.";
+    }
+
+    // Check for minimum length of 8 characters
+    if (strlen($password) < 8) {
+        $errors[] = "Your password must be at least 8 characters long.";
+    }
+
+    return $errors;
 }
 ?>
 
