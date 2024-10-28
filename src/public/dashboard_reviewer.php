@@ -5,6 +5,8 @@ require_once '../controllers/BillController.php';
 $billController = new BillController($pdo);
 $errorMessage = "";
 
+$billsToReview = $billController->findByStatus('R');
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($_POST["bill"]) || empty($_POST["action"])) {
         $errorMessage .= "<p>Please select bill!</p>";
@@ -31,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <?php include '../views/header.php' ?>
-<div>
-    <div>
+<div class="container">
+    <div class="table-area">
         <div>
             <h1>Review Bills</h1>
         </div>
@@ -46,24 +48,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </tr>
             </thead>
             <tbody>
-            <?php
-                $billsToReview = $billController->findByStatus('R');
-                foreach ($billsToReview as $bill) {
-                    echo "<tr>
-                                        <td>{$bill['title']}</td>
-                                        <td>{$bill['description']}</td>
-                                        <td>{$bill['status']}</td>
-                                        <td>
-                                            <form action='bill_review.php'>
-                                                <input type='hidden' name='bill' value='{$bill['id']}'>
-                                                <input type='submit' value='Review'>
-                                            </form>
-                                        </td>
-                                      </tr>";
-                }
-                ?>
+                <?php foreach ($billsToReview as $bill): ?>
+                    <tr>
+                        <td><?= $bill['title']; ?></td>
+                        <td><?= $bill['description']; ?></td>
+                        <td><?= $bill['status']; ?></td>
+                        <td>
+                            <form action='bill_review.php'>
+                                <input type='hidden' name='bill' value='<?= $bill['id']; ?>'>
+                                <input type='submit' value='Review'>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+    <?php include './report.php' ?>
+    <?php include './notification.php' ?>
 </div>
+
+
 <?php include '../views/footer.php' ?>

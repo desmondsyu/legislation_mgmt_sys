@@ -48,6 +48,13 @@ CREATE TABLE vote (
   FOREIGN KEY (mp_id) REFERENCES user(id)
 );
 
+CREATE TABLE notifications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  message VARCHAR(255),
+  role VARCHAR(50),
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE USER IF NOT EXISTS 'govuser'@'%' IDENTIFIED BY 'Gov@user1234';
 GRANT ALL PRIVILEGES ON legislation_sys_db.* TO 'govuser'@'%';
 FLUSH PRIVILEGES;

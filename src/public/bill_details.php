@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php
             if (!isset($billId))
                 return;
-            $amendmentsForBill = $amendmentController->findByBill($billId);
+            $amendmentsForBill = $amendmentController->findByBill($billId) ? : [];
             foreach ($amendmentsForBill as $amendment) {
                 echo "<tr>
                         <td>{$amendment['amendments']}</td>
