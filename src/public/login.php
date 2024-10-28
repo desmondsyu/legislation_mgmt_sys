@@ -6,6 +6,36 @@ require_once '../controllers/UserController.php';
 $errorMessage = "";
 $rememberUser = false;
 
+function handleLogin($pdo, $username, $password) {
+    $userController = new UserController($pdo);
+    return $userController->login($username, $password);
+}
+
+function setLoginCookies($user) {
+    if (isset($_POST["remember"])) {
+        $lifetime = 60 * 60 * 24 * 7; // 1 week
+        setcookie("username", $user['username'], time() + $lifetime, "/");
+        setcookie("user", $user['id'], time() + $lifetime, "/");
+        setcookie("role", $user['role'], time() + $lifetime, "/");
+    }
+}
+
+function redirectToDashboard($role) {
+    switch ($role) {
+        case 'PARLIAMENT':
+            header('Location: dashboard_mp.php');
+            break;
+        case 'REVIEWER':
+            header('Location: dashboard_reviewer.php');
+            break;
+        case 'ADMINISTRATOR':
+            header('Location: dashboard_admin.php');
+            break;
+        default:
+            break;
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($_POST["username"]) || empty($_POST["password"])) {
         $errorMessage .= "<p>Please fill all fields!</p>";
@@ -15,34 +45,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $password = $_POST['password'];
             $rememberUser = isset($_POST["remember"]);
 
-            $userController = new UserController($pdo);
-            $user = $userController->login($username, $password);
+            $user = handleLogin($pdo, $username, $password);
 
             if ($user) {
 
-                if ($rememberUser) {
-                    $lifetime = 60 * 60 * 24 * 7;
-                    setcookie("username", $user['username'], time() + $lifetime, "/");
-                    setcookie("user", $user['id'], time() + $lifetime, "/");
-                    setcookie("role", $user['role'], time() + $lifetime, "/");
-                }
+                setLoginCookies($user);
 
                 $_SESSION['user'] = $user['id'];
                 $_SESSION['role'] = $user['role'];
 
-                switch ($_SESSION['role']) {
-                    case 'PARLIAMENT':
-                        header('Location: dashboard_mp.php');
-                        break;
-                    case 'REVIEWER':
-                        header('Location: dashboard_reviewer.php');
-                        break;
-                    case 'ADMINISTRATOR':
-                        header('Location: dashboard_admin.php');
-                        break;
-                    default:
-                        break;
-                }
+                redirectToDashboard($_SESSION['role']);
+
             } else {
                 echo "Invalid credentials!";
             }
