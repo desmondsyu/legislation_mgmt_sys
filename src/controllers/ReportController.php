@@ -40,11 +40,11 @@ class ReportController
 
         $pdf->Cell(40, 10, 'Title: ' . $bill['title']);
         $pdf->Ln(10);
-        $pdf->MultiCell(0, 10, 'Description: ' . $bill['description']);
+        $pdf->Cell(0, 10, 'Description: ' . $bill['description']);
         $pdf->Ln(10);
         $pdf->Cell(40, 10, 'Author ID: ' . $bill['author']);
         $pdf->Ln(10);
-        $pdf->MultiCell(0, 10, 'Content: ' . $bill['content']);
+        $pdf->Cell(0, 10, 'Content: ' . $bill['content']);
         $pdf->Ln(10);
         $pdf->Cell(40, 10, 'Status: ' . $bill['status']);
         $pdf->Ln(10);
