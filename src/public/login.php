@@ -6,63 +6,49 @@ require_once '../controllers/UserController.php';
 $errorMessage = "";
 $rememberUser = false;
 
-function setLoginCookies($user) {
-    if (isset($_POST["remember"])) {
-        $lifetime = 60 * 60 * 24 * 7; // 1 week
-        setcookie("username", $user['username'], time() + $lifetime, "/");
-        setcookie("user", $user['id'], time() + $lifetime, "/");
-        setcookie("role", $user['role'], time() + $lifetime, "/");
-    }
-}
-
-function redirectToDashboard($role) {
-    switch ($role) {
-        case 'PARLIAMENT':
-            header('Location: dashboard_mp.php');
-            break;
-        case 'REVIEWER':
-            header('Location: dashboard_reviewer.php');
-            break;
-        case 'ADMINISTRATOR':
-            header('Location: dashboard_admin.php');
-            break;
-        default:
-            break;
-    }
-}
-
-function handleLogin($pdo, $username, $password) {
-    $userController = new UserController($pdo);
-    return $userController->login($username, $password);
-}
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($_POST["username"]) || empty($_POST["password"])) {
         $errorMessage .= "<p>Please fill all fields!</p>";
-        return;
-    } 
+    } else {
+        try {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $rememberUser = isset($_POST["remember"]);
 
-    try {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $rememberUser = isset($_POST["remember"]);
+            $userController = new UserController($pdo);
+            $user = $userController->login($username, $password);
 
-        $user = handleLogin($pdo, $username, $password);
-        
-        if (!$user) {
-            echo "<p>Invalid credentials!</p>";
-            return;
+            if ($user) {
+
+                if ($rememberUser) {
+                    $lifetime = 60 * 60 * 24 * 7;
+                    setcookie("username", $user['username'], time() + $lifetime, "/");
+                    setcookie("user", $user['id'], time() + $lifetime, "/");
+                    setcookie("role", $user['role'], time() + $lifetime, "/");
+                }
+
+                $_SESSION['user'] = $user['id'];
+                $_SESSION['role'] = $user['role'];
+
+                switch ($_SESSION['role']) {
+                    case 'PARLIAMENT':
+                        header('Location: dashboard_mp.php');
+                        break;
+                    case 'REVIEWER':
+                        header('Location: dashboard_reviewer.php');
+                        break;
+                    case 'ADMINISTRATOR':
+                        header('Location: dashboard_admin.php');
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                echo "Invalid credentials!";
+            }
+        } catch (Exception $e) {
+            $errorMessage .= "<p>" . $e->getMessage() . "</p>";
         }
-
-        setLoginCookies($user);
-
-        $_SESSION['user'] = $user['id'];
-        $_SESSION['role'] = $user['role'];
-
-        redirectToDashboard($_SESSION['role']);
-        
-    } catch (Exception $e) {
-        $errorMessage .= "<p>" . $e->getMessage() . "</p>";
     }
 }
 ?>
