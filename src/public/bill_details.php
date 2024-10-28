@@ -43,6 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $content = $_POST['content'];
         $author = $_SESSION['user'];
 
+        if (isset($_POST['bill']))
+            $billId = intval($_POST['bill']);
+
         try {
             if (isset($billId)) {
                 $billController->updateBill($billId, $title, $description, $content);
@@ -66,6 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php echo $errorMessage; ?>
     <form method="post">
         <?php include '../views/bill_form.php' ?>
+        <?php if (isset($_GET['bill']) && $_GET['bill'] != 'new'): ?>
+            <input type="hidden" name="bill" value="<?php echo $_GET['bill']; ?>">
+        <?php endif; ?>
         <button type="submit">Save</button>
     </form>
     <div class="table-area">
