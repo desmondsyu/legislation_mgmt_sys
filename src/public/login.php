@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $user = $userController->login($username, $password);
 
             if ($user) {
-                
+
                 if ($rememberUser) {
                     $lifetime = 60 * 60 * 24 * 7;
                     setcookie("username", $user['username'], time() + $lifetime, "/");
@@ -61,10 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <input type="password" name="password" required />
     <label>Remember Me</label>
     <input type="checkbox" name="remember" />
-    <button type="submit">Login</button>
-    <a href="register.php">
-        <button type="button">Register</button>
-    </a>
+    <div>
+        <button type="submit">Login</button>
+        <a href="register.php">
+            <button type="button">Register</button>
+        </a>
+    </div>
+
     <?php echo $errorMessage ?>
 </form>
 <?php include '../views/footer.php' ?>

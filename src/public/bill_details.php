@@ -46,8 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             if (isset($billId)) {
                 $billController->updateBill($billId, $title, $description, $content);
+                header('Location: dashboard_mp.php');
             } else {
                 $billController->createNewBill($title, $description, $author, $content);
+                header('Location: dashboard_mp.php');
             }
         } catch (Exception $e) {
             $errorMessage .= "<p>" . $e->getMessage() . "</p>";
@@ -57,15 +59,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <?php include '../views/header.php' ?>
+<div class="bill-area">
     <div>
-        <div>
-            <h1>Bill</h1>
-        </div>
-        <?php echo $errorMessage; ?>
-            <form method="post">
-                <?php include '../views/bill_form.php' ?>
-                <button type="submit">Save</button>
-            </form>
+        <h1>Bill</h1>
+    </div>
+    <?php echo $errorMessage; ?>
+    <form method="post">
+        <?php include '../views/bill_form.php' ?>
+        <button type="submit">Save</button>
+    </form>
+    <div class="table-area">
         <table>
             <thead>
                 <tr>
@@ -74,18 +77,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </tr>
             </thead>
             <tbody>
-            <?php
-            if (!isset($billId))
-                return;
-            $amendmentsForBill = $amendmentController->findByBill($billId) ? : [];
-            foreach ($amendmentsForBill as $amendment) {
-                echo "<tr>
+                <?php
+                if (!isset($billId))
+                    return;
+                $amendmentsForBill = $amendmentController->findByBill($billId) ?: [];
+                foreach ($amendmentsForBill as $amendment) {
+                    echo "<tr>
                         <td>{$amendment['amendments']}</td>
                         <td>{$amendment['create_time']}</td>
                       </tr>";
-            }
-            ?>
+                }
+                ?>
             </tbody>
         </table>
     </div>
+</div>
 <?php include '../views/footer.php' ?>

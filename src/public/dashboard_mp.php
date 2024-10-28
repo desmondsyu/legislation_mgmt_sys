@@ -9,7 +9,6 @@ $errorMessage = "";
 $user = $_SESSION['user'];
 
 $myBills = $billController->findByAuthor((int)$_SESSION['user']);
-$votingBills = $billController->findByStatus('V');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST["bill"]) && isset($_POST["action"])) {

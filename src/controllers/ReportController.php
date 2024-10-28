@@ -25,7 +25,9 @@ class ReportController
 
         $bill = $this->billRepository->findById($bill_id);
         $amendments = $this->amendmentRepository->findByBill($bill_id);
-        $votes = $this->voteRepository->findByBill($bill_id);
+        $votesAgree = $this->voteRepository->findByBillAndVote($bill_id, true);
+        $votesDisagree = $this->voteRepository->findByBillAndVote($bill_id, false);
+
 
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="bill.pdf"');
@@ -66,23 +68,20 @@ class ReportController
         $pdf->SetFont('Arial', '', 12);
 
         if (!empty($votes)) {
-            foreach ($votes as $vote) {
-                $voteResult = $vote['agree'] ? 'For' : 'Against';
-                $pdf->Cell(0, 10, "MP ID: {$vote['mp_id']} - Vote: {$voteResult}", 0, 1);
-            }
+            $pdf->Cell(0, 10, "{$votesAgree->ob_get_length} Seats Agreed | {$votesDisagree->ob_get_length} Seats Declined", 0, 1, 'C');
         } else {
-            $pdf->Cell(40, 10, 'No votes found.');
+            $pdf->Cell(0, 40, 'No votes found.');
         }
+
+        $pdf->Output();
     }
 
     public function getReport($filter)
     {
         return $this->billRepository->fetchFilteredBills(
-            $filter['author'] ?? null,
             $filter['title'] ?? null,
-            $filter['status'] ?? null,
-            $filter['start_date'] ?? null,
-            $filter['end_date'] ?? null
+            $filter['description'] ?? null,
+            $filter['status'] ?? null
         );
     }
 }
