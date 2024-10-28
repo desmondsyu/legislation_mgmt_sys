@@ -56,6 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </table>
     </div>
     <?php include './report.php' ?>
+    <?php include './notification.php' ?>
 </div>
-<?php include './notification.php' ?>
 <?php include '../views/footer.php' ?>

@@ -39,7 +39,7 @@ class BillController
     public function submitBill($id)
     {
         $title = $this->findById($id)['title'];
-        $this->notificationController->createNewNotification("New bill submitted " . $title, 'REVIEWER');
+        $this->notificationController->createNewNotification("New bill submitted: " . $title, 'REVIEWER');
         return $this->billRepository->updateStatus($id, 'R');
     }
 
@@ -72,6 +72,7 @@ class BillController
     public function votePassed($id)
     {
         $title = $this->findById($id)['title'];
+        $this->notificationController->createNewNotification("Bill vote passed: " . $title, 'PARLIAMENT');
         $this->notificationController->createNewNotification("Bill vote passed: " . $title, 'ADMINISTRATOR');
         return $this->billRepository->updateStatus($id, 'P');
     }
@@ -80,6 +81,7 @@ class BillController
     public function voteDenied($id)
     {
         $title = $this->findById($id)['title'];
+        $this->notificationController->createNewNotification("Bill vote denied: " . $title, 'PARLIAMENT');
         $this->notificationController->createNewNotification("Bill vote denied: " . $title, 'ADMINISTRATOR');
         return $this->billRepository->updateStatus($id, 'E');
     }
