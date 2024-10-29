@@ -327,19 +327,40 @@ table tbody tr td form input {
 }
 
 /* Login Page */
-/* Remember me container */
-.login-form .remember-container {
-    font-weight: bold;
+
+.form-container {
     display: flex;
-    align-items: center;
+    justify-content: center; /* Center horizontally */
+    align-items: center;    /* Center vertically */
+    height: calc(100vh - 60px); /* Adjust height according to header */
+    margin: 0 auto;         /* Center the container */
+}
+
+.login-form, .register-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;           /* Fixed width for forms */
+    padding: 2rem;         /* Add padding around forms */
+    border: 1px solid #ccc; /* Optional border */
+    border-radius: 8px;    /* Rounded corners */
+    background-color: #fff; /* White background for forms */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+.login-form button, .register-form button {
+    width: 100%;            /* Full width for buttons */
+}
+
+/* Remember me container */
+.remember-container {
+    display: flex;
     margin-top: 0.5rem;
 }
 
-.login-form .remember-container label {
+.remember-container label {
     margin: 0 0.5rem 0 0.5rem;
-    font-weight: bold;
 }
 
-.login-form .remember-container input[type="checkbox"] {
+.remember-container input[type="checkbox"] {
     margin: 0;
 }
