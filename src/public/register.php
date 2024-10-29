@@ -69,6 +69,7 @@ function validatePassword($password) {
 ?>
 
 <?php include '../views/header.php' ?>
+<div class="form-container">
 <form class="register-form" method="POST">
     <label>Username</label>
     <input type="text" name="username" required>
@@ -89,4 +90,5 @@ function validatePassword($password) {
 
     <?php echo $errorMessage ?>
 </form>
+</div>
 <?php include '../views/footer.php' ?>
