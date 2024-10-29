@@ -325,3 +325,21 @@ table tbody tr td form input {
     margin: 0.5rem 0;
     border: white solid;
 }
+
+/* Login Page */
+/* Remember me container */
+.login-form .remember-container {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.login-form .remember-container label {
+    margin: 0 0.5rem 0 0.5rem;
+    font-weight: bold;
+}
+
+.login-form .remember-container input[type="checkbox"] {
+    margin: 0;
+}

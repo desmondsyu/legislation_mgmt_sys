@@ -72,8 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <input type="text" name="username" value="<?php echo isset($_COOKIE['username']) ? htmlspecialchars($_COOKIE['username']) : ''; ?>" required />
     <label>Password</label>
     <input type="password" name="password" required />
-    <label>Remember Me</label>
-    <input type="checkbox" name="remember" />
+    <div class="remember-container">
+        <input type="checkbox" name="remember" />
+        <label>Remember Me</label>
+    </div>
     <div>
         <button type="submit">Login</button>
         <a href="register.php">
