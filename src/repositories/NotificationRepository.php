@@ -20,7 +20,7 @@ class NotificationRepository extends BaseRepository {
     public function update($id, $data) {}
 
     public function findByRole($role){
-        $sql = "SELECT * FROM notifications WHERE role = :role ORDER BY create_time DESC";
+        $sql = "SELECT * FROM notifications WHERE role = :role ORDER BY create_time DESC LIMIT 10";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['role' => $role]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
