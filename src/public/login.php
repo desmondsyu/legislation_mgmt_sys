@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 redirectToDashboard($_SESSION['role']);
 
             } else {
-                echo "Invalid credentials!";
+                throw new Exception("Invalid credentials!");
             }
         } catch (Exception $e) {
             $errorMessage .= "<p>" . $e->getMessage() . "</p>";
@@ -83,7 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="button">Register</button>
         </a>
     </div>
-
     <?php echo $errorMessage ?>
 </form>
 </div>

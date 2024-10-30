@@ -5,7 +5,7 @@ try{
     $notificationList = $notificationController->findByRole($_SESSION['role']);
 ?>
     <div class="notify-area">
-    <h1>Notification</h1>
+    <h1>Message</h1>
     <ul>
         <?php foreach($notificationList as $notify) : ; ?>
         <li><?= htmlspecialchars($notify['message']); ?></li>

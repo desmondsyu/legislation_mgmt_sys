@@ -26,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $userId = $userController->register($username, $password, $role);
 
         if ($userId) {
-            echo "User registered successfully!";
+            throw new Exception("User registered successfully!");
         } else {
-            echo "Failed to register user.";
+            throw new Exception("Failed to register user.");
         }
     } catch (Exception $e) {
         $errorMessage .= "<p>" . $e->getMessage() . "</p>";
